@@ -1,0 +1,11 @@
+.content {
+    margin: 10px 40px;
+}
+
+@media (min-width: 1920px) {
+    .content {
+        min-width: 1600px;
+        max-width: 1800px;
+        margin: auto;
+    }
+}

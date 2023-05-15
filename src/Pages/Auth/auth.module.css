@@ -1,0 +1,61 @@
+.circles {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+}
+
+.circles::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 750px;
+    height: 750px;
+    border-radius: 50%;
+    border: 5px solid rgba(200, 40, 40, 0.2);
+    top: -25%;
+    left: -25%;
+}
+
+.circles::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 1250px;
+    height: 1250px;
+    border-radius: 50%;
+    border: 5px solid rgba(200, 40, 40, 0.2);
+    top: -75%;
+    left: -75%;
+}
+
+.link {
+    display: inline-flex;
+    text-transform: none;
+    text-decoration: none;
+    color: #222;
+    border-radius: 14px;
+    background-color: #FFF;
+    padding: 8px 16px;
+}
+
+.link:hover {
+    color: rgb(252, 188, 78);
+}
+
+.helios {
+    font-size: 1.5rem;
+    color: rgba(190, 40, 40, 1);
+    letter-spacing: 5px;
+    position: relative;
+    font-weight: 600;
+}
+
+.helios::before {
+    content: "strategia";
+    position: absolute;
+    bottom: -10px;
+    right: 0px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}

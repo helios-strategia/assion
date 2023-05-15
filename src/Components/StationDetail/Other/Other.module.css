@@ -1,0 +1,16 @@
+.mapWrapper {
+    margin-top: 30px;
+}
+
+.smallText {
+    font-size: 0.7rem;
+    color: #666;
+    line-height: 1rem;
+    margin-bottom: auto;
+}
+
+.bigText {
+    font-size: 1.1rem;
+    margin-top: auto;
+    margin-bottom: auto;
+}
