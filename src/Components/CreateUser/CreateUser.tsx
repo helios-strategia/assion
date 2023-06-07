@@ -15,6 +15,7 @@ import styles from "./CreateUser.module.css";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import { useCreateUser } from "./api.create.user";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -36,7 +37,7 @@ const beforeUpload = (file: RcFile) => {
 
 const { Option } = Select;
 
-interface UserCreateFormState {
+export interface UserCreateFormState {
   email: string;
   name: string;
   phone: string;
@@ -60,6 +61,8 @@ export const CreateUser: FC<CreateUserProps> = ({ open, hideModal }) => {
   const {
     token: { colorPrimary },
   } = theme.useToken();
+
+  const { loadingUCreateUser, fetchCreateUser } = useCreateUser();
 
   const [formState, setFormState] = useState<UserCreateFormState>(initialValue);
 
@@ -96,6 +99,12 @@ export const CreateUser: FC<CreateUserProps> = ({ open, hideModal }) => {
     </div>
   );
 
+  async function onFinish(values: UserCreateFormState) {
+    await fetchCreateUser(values);
+
+    hideModal();
+  }
+
   return (
     <Modal
       title="Додати користувача"
@@ -103,7 +112,11 @@ export const CreateUser: FC<CreateUserProps> = ({ open, hideModal }) => {
       onCancel={hideModal}
       footer={null}
     >
-      <Form className={styles.formWrapper}>
+      <Form
+        disabled={loadingUCreateUser}
+        className={styles.formWrapper}
+        onFinish={onFinish}
+      >
         <Form.Item
           hasFeedback
           name="avatar"
@@ -157,7 +170,17 @@ export const CreateUser: FC<CreateUserProps> = ({ open, hideModal }) => {
             <Option value={RoleEncode[Role.CLIENT]}>{Role.CLIENT}</Option>
           </Select>
         </Form.Item>
-        <Form.Item hasFeedback name="password" rules={[{ required: true }]}>
+        <Form.Item
+          hasFeedback
+          name="password"
+          rules={[
+            {
+              required: true,
+              min: 8,
+              message: "Мінімальна кількість символів - 8",
+            },
+          ]}
+        >
           <Input
             placeholder="Пароль"
             type="password"
@@ -168,7 +191,17 @@ export const CreateUser: FC<CreateUserProps> = ({ open, hideModal }) => {
         <Form.Item
           hasFeedback
           name="passwordConfirm"
-          rules={[{ required: true }]}
+          rules={[
+            { required: true },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error("Вказані паролі не однакові"));
+              },
+            }),
+          ]}
         >
           <Input
             placeholder="Підтвердження паролю"

@@ -1,23 +1,27 @@
 import { FC } from "react";
 import { HeaderAppProps } from ".";
 import { Header } from "antd/es/layout/layout";
-import { Avatar, Dropdown, Typography, theme } from "antd";
+import { Avatar, Button, Dropdown, Typography, theme } from "antd";
 import {
   BellFilled,
   IdcardFilled,
   UserOutlined,
   LockFilled,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { MenuProps, Tag } from "antd";
+import { useAuth } from "../../hooks/useAuth";
 
 export const HeaderApp: FC<HeaderAppProps> = (props) => {
+  const { signOut } = useAuth();
+
   const {
     token: { colorBgContainer, colorPrimary },
   } = theme.useToken();
   const items: MenuProps["items"] = [
     {
-      key: "3",
+      key: "account",
       label: (
         <Tag color="warning">
           <Typography.Text>Вася Пупкін</Typography.Text>
@@ -25,7 +29,7 @@ export const HeaderApp: FC<HeaderAppProps> = (props) => {
       ),
     },
     {
-      key: "1",
+      key: "main",
       label: (
         <Link rel="noopener noreferrer" to="/account#main">
           <IdcardFilled style={{ color: colorPrimary, marginRight: 5 }} />
@@ -34,12 +38,21 @@ export const HeaderApp: FC<HeaderAppProps> = (props) => {
       ),
     },
     {
-      key: "2",
+      key: "privacy",
       label: (
         <Link rel="noopener noreferrer" to="/account#privacy">
           <LockFilled style={{ color: colorPrimary, marginRight: 5 }} />
           Безпека
         </Link>
+      ),
+    },
+    {
+      key: "signout",
+      label: (
+        <Button onClick={signOut} style={{ width: "100%" }}>
+          <LogoutOutlined style={{ color: colorPrimary, marginRight: 5 }} />
+          Выйти
+        </Button>
       ),
     },
   ];

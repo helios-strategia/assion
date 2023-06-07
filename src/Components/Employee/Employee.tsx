@@ -51,7 +51,7 @@ export const Employee: FC<EmployeeProps> = (props) => {
             5 группа та вище 1000В
           </Typography>
         </Col>
-        <Col xs={10}>
+        <Col xs={24} md={10}>
           <Typography style={{ fontWeight: 600 }}>Обовʼязки</Typography>
           <Typography className={styles.smallText}>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae,

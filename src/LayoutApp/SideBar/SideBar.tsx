@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { SideBarProps } from ".";
-import Sider from "antd/es/layout/Sider";
-import { Menu, theme } from "antd";
+import { Menu, theme, Layout } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -15,9 +14,9 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-export const SideBar: FC<SideBarProps> = ({}) => {
-  const [collapsed, setCollapsed] = useState<boolean>(true);
+const { Sider } = Layout;
 
+export const SideBar: FC<SideBarProps> = ({}) => {
   const {
     token: { colorPrimary },
   } = theme.useToken();
@@ -26,10 +25,11 @@ export const SideBar: FC<SideBarProps> = ({}) => {
     <Sider
       theme="light"
       collapsible
-      collapsed={collapsed}
-      onCollapse={(value) => setCollapsed(value)}
+      defaultCollapsed={true}
+      style={{ position: "relative" }}
     >
       <Menu
+        style={{ position: "sticky", top: 0 }}
         mode="inline"
         items={[
           {

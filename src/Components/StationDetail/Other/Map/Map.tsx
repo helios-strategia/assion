@@ -5,8 +5,10 @@ import Map, { NavigationControl } from "react-map-gl";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
-export const PlanMap: FC<MapProps> = (props) => {
-  const pos: any = [48.52292632999998, 35.02279662999999];
+export const PlanMap: FC<MapProps> = ({
+  lat = 48.523104,
+  lng = 35.0225365,
+}) => {
   return (
     <div
       style={{
@@ -20,15 +22,15 @@ export const PlanMap: FC<MapProps> = (props) => {
       id="map"
     >
       {/* <Map
-        //mapLib={maplibregl}
+        mapLib={maplibregl}
         initialViewState={{
-          longitude: 48.52292632999998,
-          latitude: 35.02279662999999,
+          longitude: lng,
+          latitude: lat,
           zoom: 14,
         }}
         style={{ width: "100%", height: 600 }}
         mapStyle={
-          "https://api.maptiler.com/maps/basic-v2/style.json?key=N3YKm8X0dCiguFWUx562#{z}/{x}/{y}"
+          "https://api.maptiler.com/maps/hybrid/style.json?key=N3YKm8X0dCiguFWUx562"
         }
       >
         <NavigationControl position="top-left" />
@@ -36,7 +38,7 @@ export const PlanMap: FC<MapProps> = (props) => {
       <iframe
         width="100%"
         height="100%"
-        src="https://api.maptiler.com/maps/streets-v2/?key=N3YKm8X0dCiguFWUx562#12/48.52292632999998/35.02279662999999"
+        src={`https://api.maptiler.com/maps/hybrid/?key=LpIQkgKnqvp3HUGYH70R#15/${lat}/${lng}`}
       ></iframe>
     </div>
   );

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { UsersProps } from ".";
 import {
   Avatar,
@@ -15,54 +15,7 @@ import { ColumnsType } from "antd/es/table";
 import { EditFilled, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import { CreateUser } from "../../Components/CreateUser";
 import { UpdateUser } from "../../Components/UpdateUser";
-
-const moc: User[] = [
-  {
-    id: 1,
-    version: 0,
-    name: "Валерий Жмишенко",
-    role: "ADMIN",
-    email: "valera@helios.com",
-    avatar: "",
-    phone: "+38011111111",
-  },
-  {
-    id: 2,
-    version: 0,
-    name: "Вася Пупкин",
-    role: "CLIENT",
-    email: "vasya228@helios.com",
-    avatar: "",
-    phone: "+38011111111",
-  },
-  {
-    id: 3,
-    version: 0,
-    name: "Иваи Иванов",
-    role: "ADMIN",
-    email: "ivanivan@helios.com",
-    avatar: "",
-    phone: "+38011111111",
-  },
-  {
-    id: 4,
-    version: 0,
-    name: "Захар Петров",
-    role: "CLIENT",
-    email: "zahar@helios.com",
-    avatar: "",
-    phone: "+38011111111",
-  },
-  {
-    id: 5,
-    version: 0,
-    name: "Дмитрий Левандовский",
-    role: "CLIENT",
-    email: "levandovskiy@helios.com",
-    avatar: "",
-    phone: "+38011111111",
-  },
-];
+import { useAllUsers } from "./api.users";
 
 const showTypes = [
   { label: "Усі", value: "ALL" },
@@ -77,7 +30,8 @@ export const Users: FC<UsersProps> = (props) => {
     token: { colorPrimary },
   } = theme.useToken();
 
-  const [users, setUsers] = useState<User[]>(moc);
+  const { users, fetchAllUsers, loadingUsers } = useAllUsers();
+
   const [showType, seShowType] = useState<showTypesType>("ALL");
   const [inputFilter, setInputFilter] = useState<string>("");
   const [openModalCreateUser, setOpenModalCreateUser] =
@@ -85,6 +39,10 @@ export const Users: FC<UsersProps> = (props) => {
   const [openModalUpdateUser, setOpenModalUpdateUser] = useState<User | null>(
     null
   );
+
+  useEffect(() => {
+    fetchAllUsers();
+  }, []);
 
   function showModalCreateUser() {
     setOpenModalCreateUser(true);
@@ -107,8 +65,8 @@ export const Users: FC<UsersProps> = (props) => {
     return users
       .filter((user) => {
         return (
-          RegExp(inputFilter).test(user.phone.toLowerCase()) ||
-          RegExp(inputFilter).test(user.name.toLowerCase())
+          (user.phone && RegExp(inputFilter).test(user.phone.toLowerCase())) ||
+          (user.name && RegExp(inputFilter).test(user.name.toLowerCase()))
         );
       })
       .filter((user) => {
@@ -123,16 +81,17 @@ export const Users: FC<UsersProps> = (props) => {
   const columns: ColumnsType<User> = [
     {
       title: "",
-      dataIndex: "avatar",
-      key: "avatar",
+      dataIndex: "avatarUrl",
+      key: "avatarUrl",
       width: 35,
       align: "center",
-      render() {
+      render(text) {
         return (
           <Avatar
             size={40}
             style={{ backgroundColor: colorPrimary }}
             icon={<UserOutlined />}
+            src={text || undefined}
           />
         );
       },
@@ -199,7 +158,12 @@ export const Users: FC<UsersProps> = (props) => {
         </Button>
       </div>
       <Input size="large" onChange={inputFilterHandler} />
-      <Table dataSource={filterUsers()} columns={columns} pagination={false} />
+      <Table
+        loading={loadingUsers}
+        dataSource={filterUsers()}
+        columns={columns}
+        pagination={false}
+      />
       <CreateUser open={openModalCreateUser} hideModal={hideModalCreateUser} />
       <UpdateUser open={openModalUpdateUser} hideModal={hideModalUpdateUser} />
     </div>

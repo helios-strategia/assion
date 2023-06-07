@@ -60,36 +60,31 @@ export const CrashLogs: FC<CrashLogsProps> = (props) => {
       <Typography.Title level={5}>
         Оперативний жкрнал з реєстрації аварії
       </Typography.Title>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 40,
-        }}
-      >
-        {crashData.map((elem) => {
+      <Row gutter={[40, 20]} justify="center">
+        {crashData.map((elem, index) => {
           return (
-            <div
-              style={{
-                minWidth: 250,
-                backgroundColor: colorPrimary,
-                padding: "10px 20px",
-                margin: "30px 0",
-                display: "flex",
-                borderRadius: 8,
-                gap: 20,
-                alignItems: "center",
-              }}
-            >
-              <div>{elem.icon}</div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <strong style={{ fontSize: 20 }}>{elem.count}</strong>
-                <span>{elem.text}</span>
+            <Col key={index}>
+              <div
+                style={{
+                  minWidth: 250,
+                  backgroundColor: colorPrimary,
+                  padding: "10px 20px",
+                  display: "flex",
+                  borderRadius: 8,
+                  gap: 20,
+                  alignItems: "center",
+                }}
+              >
+                <div>{elem.icon}</div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <strong style={{ fontSize: 20 }}>{elem.count}</strong>
+                  <span>{elem.text}</span>
+                </div>
               </div>
-            </div>
+            </Col>
           );
         })}
-      </div>
+      </Row>
       <Divider />
       <Button
         onClick={() => setOpenModalCrash(true)}

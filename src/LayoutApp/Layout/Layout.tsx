@@ -21,7 +21,7 @@ export const LayoutApp: FC<LayoutProps> = () => {
       {isAuth ? (
         <Layout
           hasSider
-          style={{ height: "100vh", padding: 0 }}
+          style={{ minHeight: "100vh", padding: 0 }}
           className={styles.wrapper}
         >
           <SideBar className={styles.sidebar} />

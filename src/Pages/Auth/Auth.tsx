@@ -1,6 +1,7 @@
 import { FC, useContext } from "react";
 import { AuthProps } from ".";
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -8,6 +9,7 @@ import {
   Input,
   Layout,
   Row,
+  Spin,
   Typography,
   theme,
 } from "antd";
@@ -29,7 +31,7 @@ export const Auth: FC<AuthProps> = (props) => {
     token: { colorPrimary },
   } = theme.useToken();
 
-  const { signIn } = useAuth();
+  const { signIn, loading } = useAuth();
 
   const onFinish = (data: any) => {
     signIn(data);
@@ -43,7 +45,8 @@ export const Auth: FC<AuthProps> = (props) => {
       <div
         style={{
           overflow: "hidden",
-          height: "100%",
+          height: "100vh",
+          width: "100vw",
         }}
       >
         <Layout
@@ -89,9 +92,10 @@ export const Auth: FC<AuthProps> = (props) => {
                     </Typography.Paragraph>
                   </Col>
                   <Row>
-                    {texts.map((text) => {
+                    {texts.map((text, index) => {
                       return (
                         <Col
+                          key={index}
                           xs={12}
                           md={8}
                           lg={12}
@@ -170,79 +174,90 @@ export const Auth: FC<AuthProps> = (props) => {
                         Введіть ваш логін та пароль, фкий вам надав менеджер
                         вашої системи
                       </Typography.Paragraph>
-                      <Form
-                        style={{
-                          width: "100%",
-                        }}
-                        onFinish={onFinish}
-                        initialValues={{
-                          email: "vasyapupkin@helios.com",
-                          password: "11111111",
-                        }}
-                      >
-                        <Form.Item
-                          name="email"
-                          required
-                          style={{ width: "100%" }}
-                          rules={[
-                            {
-                              required: true,
-                              message: "Введіть Email",
-                            },
-                            {
-                              type: "email",
-                              message: "Некоректно введений Email",
-                            },
-                          ]}
-                        >
-                          <Input
-                            style={{ padding: 15 }}
-                            size="large"
-                            placeholder="Email"
+
+                      {loading ? (
+                        <Spin spinning={loading}>
+                          <Alert
+                            message="Виконується авторизація"
+                            description="Будь ласка зачекайте"
+                            type="info"
                           />
-                        </Form.Item>
-                        <Form.Item
-                          name="password"
-                          required
-                          style={{ width: "100%" }}
-                          rules={[
-                            {
-                              required: true,
-                              message: "Введіть пароль",
-                            },
-                          ]}
-                        >
-                          <Input.Password
-                            style={{ padding: 15 }}
-                            size="large"
-                            placeholder="Пароль"
-                          />
-                        </Form.Item>
-                        <div
+                        </Spin>
+                      ) : (
+                        <Form
                           style={{
-                            display: "flex",
-                            justifyContent: "space-between",
                             width: "100%",
-                            marginTop: 40,
+                          }}
+                          onFinish={onFinish}
+                          initialValues={{
+                            email: "vasyapupkin@helios.com",
+                            password: "11111111",
                           }}
                         >
-                          <Button
-                            style={{ color: "#000" }}
-                            size="large"
-                            type="link"
+                          <Form.Item
+                            name="email"
+                            required
+                            style={{ width: "100%" }}
+                            rules={[
+                              {
+                                required: true,
+                                message: "Введіть Email",
+                              },
+                              {
+                                type: "email",
+                                message: "Некоректно введений Email",
+                              },
+                            ]}
                           >
-                            Забули пароль?
-                          </Button>
-                          <Button
-                            htmlType="submit"
-                            style={{ width: "30%" }}
-                            size="large"
-                            type="primary"
+                            <Input
+                              style={{ padding: 15 }}
+                              size="large"
+                              placeholder="Email"
+                            />
+                          </Form.Item>
+                          <Form.Item
+                            name="password"
+                            required
+                            style={{ width: "100%" }}
+                            rules={[
+                              {
+                                required: true,
+                                message: "Введіть пароль",
+                              },
+                            ]}
                           >
-                            Увійти
-                          </Button>
-                        </div>
-                      </Form>
+                            <Input.Password
+                              style={{ padding: 15 }}
+                              size="large"
+                              placeholder="Пароль"
+                            />
+                          </Form.Item>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              width: "100%",
+                              marginTop: 40,
+                            }}
+                          >
+                            <Button
+                              style={{ color: "#000" }}
+                              size="large"
+                              type="link"
+                            >
+                              Забули пароль?
+                            </Button>
+                            <Button
+                              htmlType="submit"
+                              style={{ width: "30%" }}
+                              size="large"
+                              type="primary"
+                            >
+                              Увійти
+                            </Button>
+                          </div>
+                        </Form>
+                      )}
                     </div>
                   </Card>
                 </div>

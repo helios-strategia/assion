@@ -32,7 +32,6 @@ const options = [
 export const CalendarModal: FC<CalendarModalProps> = ({ open, setOpen }) => {
   const [eventName, setEventName] = useState("Apple");
   const onChange3 = ({ target: { value } }: RadioChangeEvent) => {
-    console.log("radio3 checked", value);
     setEventName(value);
   };
   function closeModal() {
