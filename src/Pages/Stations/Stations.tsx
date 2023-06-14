@@ -75,6 +75,7 @@ export const Stations: FC<StationsProps> = (props) => {
               <Card
                 style={{
                   width: 340,
+                  minHeight: 600,
                   height: "100%",
                   borderRadius: 8,
                   display: "flex",
