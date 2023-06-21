@@ -5,6 +5,7 @@ export enum HTTPMethod {
   GET = "GET",
   POST = "POST",
   DELETE = "DELETE",
+  PATCH = "PATCH"
 }
 
 export const useHttp = (): {

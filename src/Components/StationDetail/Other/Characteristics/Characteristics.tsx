@@ -1,12 +1,16 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { CharacteristicsProps } from ".";
 import { Col, Row, Space, Typography } from "antd";
 import styles from "./Characteristics.module.css";
 import { Badge } from "../../../Badge";
 import { LinkOutlined, PictureFilled, LayoutFilled } from "@ant-design/icons";
 import { GalleryModal } from "../../../GalleryModal";
+import { PlantContext } from "../../../../Pages/CurrentStation";
+import dayjs, { Dayjs } from "dayjs";
 export const Characteristics: FC<CharacteristicsProps> = (props) => {
   const [openModalGallery, setOpenModalGallery] = useState<boolean>(false);
+
+  const plant = useContext(PlantContext);
 
   function showGallery() {
     setOpenModalGallery(true);
@@ -27,7 +31,7 @@ export const Characteristics: FC<CharacteristicsProps> = (props) => {
             Потужність AC:
           </Typography.Paragraph>
           <Typography.Paragraph className={styles.bigText}>
-            9.9 МВт
+            {plant?.acPower} МВт
           </Typography.Paragraph>
         </Col>
         <Col xs={6}>
@@ -35,7 +39,7 @@ export const Characteristics: FC<CharacteristicsProps> = (props) => {
             Потужність DC:
           </Typography.Paragraph>
           <Typography.Paragraph className={styles.bigText}>
-            12.2 МВт
+            {plant?.dcPower} МВт
           </Typography.Paragraph>
         </Col>
         <Col xs={12}>
@@ -43,7 +47,7 @@ export const Characteristics: FC<CharacteristicsProps> = (props) => {
             Код системи АСКОЕ:
           </Typography.Paragraph>
           <Typography.Paragraph className={styles.bigText}>
-            42028348
+            {plant?.ascmePlantCode}
           </Typography.Paragraph>
         </Col>
         <Col xs={6}>
@@ -51,7 +55,7 @@ export const Characteristics: FC<CharacteristicsProps> = (props) => {
             Площа:
           </Typography.Paragraph>
           <Typography.Paragraph className={styles.bigText}>
-            9.9 МВт
+            {plant?.area}
           </Typography.Paragraph>
         </Col>
         <Col xs={6}>
@@ -59,7 +63,7 @@ export const Characteristics: FC<CharacteristicsProps> = (props) => {
             Початок єксплуатації:
           </Typography.Paragraph>
           <Typography.Paragraph className={styles.bigText}>
-            12.2 МВт
+            {dayjs(plant?.exploitationStart).format("DD.MM.YYYY HH:mm")}
           </Typography.Paragraph>
         </Col>
         <Col xs={12}>

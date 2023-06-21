@@ -1,6 +1,15 @@
-import { FC, ReactNode } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import { CurrentStationProps } from ".";
-import { Badge, Button, Card, Space, Tabs, Typography, theme } from "antd";
+import {
+  Badge,
+  Button,
+  Card,
+  Space,
+  Tabs,
+  Tooltip,
+  Typography,
+  theme,
+} from "antd";
 import { HistoryOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import type { TabsProps } from "antd";
@@ -11,6 +20,10 @@ import { CrashLogs } from "../../Components/CrashLogs";
 import { Employee } from "../../Components/Employee";
 import { Helmet } from "react-helmet";
 import { BASE_APP_NAME } from "../../consts";
+import { HTTPMethod, useHttp } from "../../hooks/useHttp";
+import { useLocation, useParams } from "react-router";
+import { apiURL } from "../../api/apiURL";
+import { Plant, PlantResponseDto, StatusDecode } from "../../types/plant";
 
 const onChange = (key: string) => {};
 
@@ -61,10 +74,48 @@ const items: TabsProps["items"] = [
   },
 ];
 
+export const PlantContext = React.createContext<PlantResponseDto | null>(null);
+
 export const CurrentStation: FC<CurrentStationProps> = (props) => {
   const {
     token: { colorPrimary },
   } = theme.useToken();
+  const {
+    baseUrl,
+    station: { allStation },
+  } = apiURL;
+  const param = useParams();
+
+  const { request } = useHttp();
+  const [plant, setPlant] = useState<PlantResponseDto | null>(null);
+
+  async function fetchPlant() {
+    const res: PlantResponseDto = await request(
+      `${baseUrl}${allStation}/${param.id}`,
+      HTTPMethod.GET
+    );
+
+    setPlant(res);
+  }
+
+  useEffect(() => {
+    fetchPlant();
+  }, []);
+
+  const titleTooltip = () => {
+    return plant?.plantStatusHistory?.map((item) => {
+      return (
+        <Space direction="horizontal" key={item.id}>
+          <Typography style={{ color: "#FFF" }}>
+            {StatusDecode[item.currentStatus]}
+          </Typography>
+          <Typography style={{ color: "#FFF" }}>
+            {dayjs(item.createdAt).format("DD.MM.YYYY HH:mm")}
+          </Typography>
+        </Space>
+      );
+    });
+  };
 
   const OperationsSlot = () => {
     return (
@@ -77,7 +128,7 @@ export const CurrentStation: FC<CurrentStationProps> = (props) => {
             fontWeight: 600,
           }}
         >
-          Активна: обмкжена генерацыя
+          {plant && StatusDecode[plant?.status]}
         </div>
         <div
           style={{
@@ -87,8 +138,29 @@ export const CurrentStation: FC<CurrentStationProps> = (props) => {
             backgroundColor: "#FFF",
           }}
         >
-          4 хв.
-          <HistoryOutlined />
+          <Tooltip placement="bottomLeft" title={titleTooltip}>
+            {plant?.plantStatusHistory &&
+              dayjs().diff(
+                dayjs(plant?.plantStatusHistory.reverse()[0].createdAt),
+                "days"
+              )}
+            {" днів ,"}
+            {plant?.plantStatusHistory &&
+              dayjs().diff(
+                dayjs(plant?.plantStatusHistory.reverse()[0].createdAt),
+                "hour"
+              ) % 24}
+
+            {" г ,"}
+            {plant?.plantStatusHistory &&
+              dayjs().diff(
+                dayjs(plant?.plantStatusHistory.reverse()[0].createdAt),
+                "minutes"
+              ) % 60}
+            {" хв"}
+
+            <HistoryOutlined />
+          </Tooltip>
         </div>
       </Space>
     );
@@ -101,7 +173,7 @@ export const CurrentStation: FC<CurrentStationProps> = (props) => {
       </Helmet>
       <div {...props}>
         <div style={{ display: "flex", alignItems: "center", gap: 30 }}>
-          <Typography.Title level={2}>ФЕС Никополь Елиос</Typography.Title>
+          <Typography.Title level={2}>{plant?.name}</Typography.Title>
           <div
             style={{
               display: "inline-flex",
@@ -113,12 +185,14 @@ export const CurrentStation: FC<CurrentStationProps> = (props) => {
             <Typography.Text>{dayjs().format("DD.MM.YYYY")}</Typography.Text>
           </div>
         </div>
-        <Tabs
-          tabBarExtraContent={<OperationsSlot />}
-          defaultActiveKey="1"
-          items={items}
-          onChange={onChange}
-        />
+        <PlantContext.Provider value={plant}>
+          <Tabs
+            tabBarExtraContent={<OperationsSlot />}
+            defaultActiveKey="1"
+            items={items}
+            onChange={onChange}
+          />
+        </PlantContext.Provider>
       </div>
     </>
   );

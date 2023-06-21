@@ -1,14 +1,17 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { InfoProps } from ".";
 import { Col, Row, Typography } from "antd";
 import styles from "../Other.module.css";
+import { PlantContext } from "../../../../Pages/CurrentStation";
 
 export const Info: FC<InfoProps> = (props) => {
+  const plant = useContext(PlantContext);
+
   return (
     <Row gutter={[20, 30]}>
       <Col xs={12} md={24}>
         <Typography style={{ fontSize: "1.2rem", fontWeight: 600 }}>
-          ТОВ Нікополь еліос
+          {plant?.name}
         </Typography>
         <Typography.Paragraph className={styles.smallText}>
           Код ЄДРПОУ: 42023443
@@ -34,13 +37,13 @@ export const Info: FC<InfoProps> = (props) => {
           Директор
         </Typography.Paragraph>
         <Typography.Paragraph className={styles.bigText}>
-          Яригін Максим Сергійович
+          {plant?.user.name}
         </Typography.Paragraph>
         <Typography.Paragraph className={styles.smallText}>
-          +38097 000 00 00
+          {plant?.user.phone || "Номер телефону не вказаний"}
         </Typography.Paragraph>
         <Typography.Paragraph className={styles.smallText}>
-          nickelios@ukr.net
+          {plant?.user.email || "Email не вказаний"}
         </Typography.Paragraph>
         <Typography.Paragraph
           className={styles.smallText}
@@ -49,13 +52,13 @@ export const Info: FC<InfoProps> = (props) => {
           Контактна особа
         </Typography.Paragraph>
         <Typography.Paragraph className={styles.bigText}>
-          Яригін Максим Сергійович
+          {plant?.contactPersonName}
         </Typography.Paragraph>
         <Typography.Paragraph className={styles.smallText}>
-          +38097 000 00 00
+          {plant?.contactPersonPhone}
         </Typography.Paragraph>
         <Typography.Paragraph className={styles.smallText}>
-          nickelios@ukr.net
+          {plant?.contactPersonEmail}
         </Typography.Paragraph>
       </Col>
     </Row>

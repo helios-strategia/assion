@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext, useEffect } from "react";
 import { WeatherProps } from ".";
 import { Spin, Typography } from "antd";
 import { useWeather } from "../../../../hooks/useWeather";
@@ -7,9 +7,22 @@ import { Badge } from "../../../Badge";
 import Morning from "../../../../img/morning-icon.svg";
 import Evening from "../../../../img/sunrise-icon.svg";
 import wind from "../../../../img/wind-icon.svg";
+import { PlantContext } from "../../../../Pages/CurrentStation";
+import dayjs from "dayjs";
 export const Weather: FC<WeatherProps> = (props) => {
-  const [weather, weatherLoading] = useWeather();
+  const {
+    weatherData: weather,
+    loading: weatherLoading,
+    fetchWeather,
+  } = useWeather();
+  console.log(weather, weatherLoading);
+  const plant = useContext(PlantContext);
 
+  useEffect(() => {
+    if (plant?.locationLatitude && plant.locationLongitude) {
+      fetchWeather(plant?.locationLatitude, plant?.locationLongitude);
+    }
+  }, []);
   return (
     <>
       <Typography style={{ fontWeight: 600 }}>Погода</Typography>
@@ -53,9 +66,10 @@ export const Weather: FC<WeatherProps> = (props) => {
             }}
           >
             <img height={16} src={Morning} alt="" />
-            04:20
+            {dayjs(weather.sys.sunrise).format("HH:mm")}
+
             <img height={16} src={Evening} alt="" />
-            20:40
+            {dayjs(weather.sys.sunset).format("HH:mm")}
           </Typography.Paragraph>
           <Typography.Paragraph
             style={{ fontSize: "0.7rem", color: "#555", margin: 0 }}

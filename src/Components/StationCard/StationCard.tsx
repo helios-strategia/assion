@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { StationCardProps } from ".";
 import {
   Avatar,
@@ -7,6 +7,7 @@ import {
   Progress,
   Row,
   Space,
+  Spin,
   Typography,
   theme,
 } from "antd";
@@ -18,11 +19,31 @@ import {
 import ReactSpeedometer from "react-d3-speedometer";
 import styles from "./Stations.module.css";
 import { ProgressHorizontal } from "../ProgressHorizontal";
+import { Status, StatusDecode } from "../../types/plant";
+import { useWeather } from "../../hooks/useWeather";
 
-export const StationCard: FC<StationCardProps> = (props) => {
+export const StationCard: FC<StationCardProps> = ({ plant }) => {
   const {
     token: { colorPrimary, borderRadius },
   } = theme.useToken();
+  const { weatherData, fetchWeather, loading } = useWeather();
+
+  useEffect(() => {
+    if (plant.locationLatitude && plant.locationLongitude) {
+      fetchWeather(plant.locationLatitude, plant.locationLongitude);
+    }
+  }, []);
+
+  const percent: number =
+    plant &&
+    plant.pvsystGenerationPlan &&
+    Array.isArray(plant.pvsystGenerationPlan) &&
+    typeof plant.pvsystGenerationPlan[0] === "number" &&
+    typeof plant.pvsystGenerationPlan.at(-1) === "number"
+      ? (plant.pvsystGenerationPlan[plant.pvsystGenerationPlan.length - 1] /
+          plant.pvsystGenerationPlan[0]) *
+        100
+      : 0;
 
   return (
     <Card className={styles.wrapper}>
@@ -39,11 +60,11 @@ export const StationCard: FC<StationCardProps> = (props) => {
             justifyContent: "space-between",
           }}
         >
-          <Typography style={{ fontWeight: 600 }}>Нікополь Еліос</Typography>
+          <Typography style={{ fontWeight: 600 }}>{plant.name}</Typography>
           <Typography
             style={{ fontSize: 12, fontWeight: 500, color: colorPrimary }}
           >
-            Активна: обмеження генерації
+            {StatusDecode[plant.status]}
           </Typography>
           <Typography style={{ fontSize: 12 }}>
             Дніпропетровська область
@@ -65,7 +86,7 @@ export const StationCard: FC<StationCardProps> = (props) => {
             <Typography.Text
               style={{ margin: 0, padding: 0, fontWeight: 700, lineHeight: 1 }}
             >
-              9.9 Mwat
+              {plant.acPower} Mwat
             </Typography.Text>
             <Typography.Text
               style={{
@@ -94,7 +115,7 @@ export const StationCard: FC<StationCardProps> = (props) => {
             <Typography
               style={{ margin: 0, padding: 0, fontWeight: 700, lineHeight: 1 }}
             >
-              12 Mwat
+              {plant.dcPower} Mwat
             </Typography>
             <Typography
               style={{
@@ -154,26 +175,35 @@ export const StationCard: FC<StationCardProps> = (props) => {
         </Col>
       </Row>
       <Row style={{ marginTop: 20 }}>
-        <Col span={18}>
-          <Typography style={{ fontSize: 22, fontWeight: 500 }}>
-            {new Intl.NumberFormat("ua-UA", {
-              style: "unit",
-              unit: "celsius",
-            }).format(22.41)}
-          </Typography>
-          <Typography style={{ fontSize: 12, color: "#555" }}>
-            Швидкість вітру 2.47 м/с
-          </Typography>
-        </Col>
-        <Col span={6}>
-          <CloudFilled style={{ color: "rgb(33,130,221)", fontSize: 80 }} />
-        </Col>
+        {!loading && weatherData ? (
+          <>
+            <Col span={18}>
+              <Typography style={{ fontSize: 22, fontWeight: 500 }}>
+                {new Intl.NumberFormat("ua-UA", {
+                  style: "unit",
+                  unit: "celsius",
+                }).format(weatherData?.main.temp || 0)}
+              </Typography>
+              <Typography style={{ fontSize: 12, color: "#555" }}>
+                Швидкість вітру {weatherData?.wind.speed} м/с
+              </Typography>
+            </Col>
+            <Col span={6}>
+              <img height={80} src={weatherData?.icon} alt="weather icon" />
+              {/* <CloudFilled style={{ color: "rgb(33,130,221)", fontSize: 80 }} /> */}
+            </Col>
+          </>
+        ) : loading ? (
+          <Spin size="large" />
+        ) : (
+          <Typography>виникла помилка</Typography>
+        )}
       </Row>
       <Row style={{ marginTop: 10 }}>
         <Typography style={{ fontSize: 14, fontWeight: 500 }}>
           Згенеровано від 100% PVSyst
         </Typography>
-        <ProgressHorizontal percent={50} />
+        <ProgressHorizontal percent={percent} />
       </Row>
     </Card>
   );

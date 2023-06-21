@@ -85,13 +85,14 @@ export const Users: FC<UsersProps> = (props) => {
       key: "avatarUrl",
       width: 35,
       align: "center",
-      render(text) {
+      render(text, record) {
+        console.log(text);
         return (
           <Avatar
-            size={40}
+            size={50}
             style={{ backgroundColor: colorPrimary }}
             icon={<UserOutlined />}
-            src={text || undefined}
+            src={"http://" + text}
           />
         );
       },

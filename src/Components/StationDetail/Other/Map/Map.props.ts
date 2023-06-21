@@ -1,5 +1,5 @@
 export interface MapProps {
-  lat?: number;
-  lng?: number;
-  zoom?: number;
+  lat?: number | null;
+  lng?: number | null;
+  zoom?: number | null;
 }

@@ -79,10 +79,10 @@ export const CreateUser: FC<CreateUserProps> = ({ open, hideModal }) => {
   const handleChange: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
   ) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
+    // if (info.file.status === "uploading") {
+    //   setLoading(true);
+    //   return;
+    // }
     if (info.file.status === "done") {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj as RcFile, (url) => {
@@ -100,10 +100,15 @@ export const CreateUser: FC<CreateUserProps> = ({ open, hideModal }) => {
   );
 
   async function onFinish(values: UserCreateFormState) {
-    await fetchCreateUser(values);
-
+    await fetchCreateUser({ ...values, avatar: imageUrl });
     hideModal();
   }
+
+  const customRequest = ({ file, onSuccess }: any) => {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
 
   return (
     <Modal
@@ -128,6 +133,7 @@ export const CreateUser: FC<CreateUserProps> = ({ open, hideModal }) => {
             className="avatar-uploader"
             showUploadList={false}
             //action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            customRequest={customRequest}
             beforeUpload={beforeUpload}
             onChange={handleChange}
           >

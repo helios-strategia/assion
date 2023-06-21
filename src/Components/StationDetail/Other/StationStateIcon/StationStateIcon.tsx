@@ -1,13 +1,22 @@
 import React, { FC } from "react";
 import { StationStateIconProps } from ".";
-import { Avatar, Badge, Col, Row, Space, Typography, theme } from "antd";
-import { CheckOutlined } from "@ant-design/icons";
-
+import {
+  Avatar,
+  Badge,
+  Col,
+  Row,
+  Space,
+  Tooltip,
+  Typography,
+  theme,
+} from "antd";
+import io from "socket.io-client";
 export const StationStateIcon: FC<StationStateIconProps> = ({
   text,
   title,
   state,
   icon,
+  bg,
 }) => {
   const {
     token: { colorBgContainer, colorPrimary },
@@ -16,24 +25,40 @@ export const StationStateIcon: FC<StationStateIconProps> = ({
   return (
     <Space direction="horizontal">
       <div style={{ position: "relative", width: 50 }}>
-        <Avatar style={{ backgroundColor: colorPrimary }} size={50}></Avatar>
+        {/* <Avatar
+          src={bg}
+          style={{ backgroundColor: colorPrimary }}
+          size={50}
+        ></Avatar> */}
+
+        <div
+          style={{
+            backgroundColor: colorPrimary,
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 60,
+            height: 60,
+          }}
+        >
+          {bg && <img width={35} height={35} src={bg} alt={text} />}
+        </div>
         <div
           style={{
             position: "absolute",
             bottom: 0,
-            right: 0,
+            right: -10,
             backgroundColor: "#888",
             borderRadius: "50%",
-            width: 15,
-            height: 15,
+            width: 18,
+            height: 18,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <span title={title} style={{}}>
-            {icon}
-          </span>
+          <Tooltip title={title || "Все впорядку"}>{icon}</Tooltip>
         </div>
       </div>
       <Typography>{text}</Typography>

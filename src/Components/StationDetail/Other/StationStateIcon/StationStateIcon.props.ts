@@ -5,4 +5,5 @@ export interface StationStateIconProps {
   icon: ReactNode;
   state?: any;
   text: string;
+  bg?: string;
 }

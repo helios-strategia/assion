@@ -1,11 +1,11 @@
 export interface User {
-  id: string | number;
+  id: string; //| number;
   avatar: string;
   email: string;
   name: string;
   phone: string;
   role: string;
-  version?: number;
+  //version?: number;
 }
 
 export enum Role {

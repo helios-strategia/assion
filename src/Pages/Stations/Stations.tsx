@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import { BASE_APP_NAME } from "../../consts";
 import { HTTPMethod, useHttp } from "../../hooks/useHttp";
 import { apiURL } from "../../api/apiURL";
+import { Plant, PlantResponseDto } from "../../types/plant";
 
 export const Stations: FC<StationsProps> = (props) => {
   const {
@@ -55,14 +56,14 @@ export const Stations: FC<StationsProps> = (props) => {
             </Col>
           ) : (
             <>
-              {stations.map((station: any, index: number) => {
+              {stations.map((station: PlantResponseDto, index: number) => {
                 return (
                   <Col key={index} xs={24} md={12} xxl={6} xl={8}>
                     <Link
                       to={`/stations/${station.id}`}
                       style={{ width: "fit-content", padding: 0 }}
                     >
-                      <StationCard />
+                      <StationCard plant={station} />
                     </Link>
                   </Col>
                 );
