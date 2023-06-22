@@ -5,7 +5,7 @@ export enum HTTPMethod {
   GET = "GET",
   POST = "POST",
   DELETE = "DELETE",
-  PATCH = "PATCH"
+  PATCH = "PATCH",
 }
 
 export const useHttp = (): {
@@ -20,7 +20,7 @@ export const useHttp = (): {
 } => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>();
-  const { jwtToken } = useJWT();
+  const { jwtToken, removeJWTToken } = useJWT();
 
   async function request(
     url: string,
@@ -31,9 +31,9 @@ export const useHttp = (): {
     try {
       setLoading(true);
 
-      const token =
-        jwtToken ||
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YWxlcmFAaGVsaW9zLmNvbSIsInJvbGUiOiJBRE1JTiIsImlkIjoxLCJpYXQiOjE2NTkzODc2NDEsImV4cCI6MTY1OTM5NDg0MX0.eGhP10QQHHCj2UiglqcsXCzkP8nnK4a-64Cb2kGpJTw";
+      const token = jwtToken;
+      // ||
+      //"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YWxlcmFAaGVsaW9zLmNvbSIsInJvbGUiOiJBRE1JTiIsImlkIjoxLCJpYXQiOjE2NTkzODc2NDEsImV4cCI6MTY1OTM5NDg0MX0.eGhP10QQHHCj2UiglqcsXCzkP8nnK4a-64Cb2kGpJTw";
 
       const isFormData = body instanceof FormData;
 
@@ -54,6 +54,14 @@ export const useHttp = (): {
         headers: myHeaders,
       })
         .then((res) => res.json())
+        .then((res) => {
+          if (res.statusCode == 401) {
+            removeJWTToken();
+            throw new Error(res.message);
+          } else {
+            return res;
+          }
+        })
         .catch((e) => {
           const err = new Error(e);
           setError(err);

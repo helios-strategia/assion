@@ -1,10 +1,12 @@
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { CurrentStationProps } from ".";
 import {
+  Alert,
   Badge,
   Button,
   Card,
   Space,
+  Spin,
   Tabs,
   Tooltip,
   Typography,
@@ -86,7 +88,7 @@ export const CurrentStation: FC<CurrentStationProps> = (props) => {
   } = apiURL;
   const param = useParams();
 
-  const { request } = useHttp();
+  const { request, loading } = useHttp();
   const [plant, setPlant] = useState<PlantResponseDto | null>(null);
 
   async function fetchPlant() {
@@ -185,14 +187,35 @@ export const CurrentStation: FC<CurrentStationProps> = (props) => {
             <Typography.Text>{dayjs().format("DD.MM.YYYY")}</Typography.Text>
           </div>
         </div>
-        <PlantContext.Provider value={plant}>
-          <Tabs
-            tabBarExtraContent={<OperationsSlot />}
-            defaultActiveKey="1"
-            items={items}
-            onChange={onChange}
-          />
-        </PlantContext.Provider>
+        {plant && !loading ? (
+          <PlantContext.Provider value={plant}>
+            <Tabs
+              tabBarExtraContent={<OperationsSlot />}
+              defaultActiveKey="1"
+              items={items}
+              onChange={onChange}
+            />
+          </PlantContext.Provider>
+        ) : loading ? (
+          <div
+            style={{
+              height: "calc(100vh - 310px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Spin size="large" spinning={loading}>
+              <Alert
+                message="Завантаження інформації станції"
+                description="Будь ласка зачекайте"
+                type="info"
+              />
+            </Spin>
+          </div>
+        ) : (
+          <Typography> ERROR</Typography>
+        )}
       </div>
     </>
   );

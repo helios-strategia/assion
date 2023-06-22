@@ -86,7 +86,6 @@ export const Users: FC<UsersProps> = (props) => {
       width: 35,
       align: "center",
       render(text, record) {
-        console.log(text);
         return (
           <Avatar
             size={50}

@@ -9,7 +9,6 @@ export const PlanMap: FC<MapProps> = ({
   lat = 48.523104,
   lng = 35.0225365,
 }) => {
-  console.log(lat, lng);
   return (
     <div
       style={{

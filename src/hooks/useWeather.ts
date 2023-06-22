@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { HTTPMethod, useHttp } from "./useHttp";
 
 const API_key = "a65a3f613545bf5b9fac5ec4b39fe7bd";
 type Weather = {
@@ -96,51 +97,22 @@ export const useWeather = (): {
   fetchWeather: (latitude: number | string, longitude: number | string) => void;
   loading: boolean;
 } => {
-  const [weatherData, setWetherData] = useState<Weather>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [weatherData, setWetherData] = useState<Weather>(moc);
 
-  // const [position, setPosition] = useState<any>();
-
-  // const options = {
-  //   enableHighAccuracy: true,
-  //   timeout: 5000,
-  //   maximumAge: 0,
-  // };
-
-  // function success(pos: any) {
-  //   const crd = pos.coords;
-
-  //   if (crd) {
-  //     setPosition(crd);
-  //     //getWether(crd);
-  //   }
-  // }
-
-  // function error(err: any) {
-  //   console.warn(`ERROR(${err.code}): ${err.message}`);
-  // }
-
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(success, error, options);
-  // }, []);
+  const { request, loading } = useHttp();
 
   async function fetchWeather(
     latitude: number | string,
     longitude: number | string
   ) {
-    setLoading(true);
-
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_key}&units=metric`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        data.icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-        setWetherData(data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    //   const res = await request(
+    //     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_key}&units=metric`,
+    //     HTTPMethod.GET
+    //   );
+    //   if (res) {
+    //     res.icon = `https://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`;
+    //   }
+    //   setWetherData(res);
   }
 
   return { weatherData, fetchWeather, loading };

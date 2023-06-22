@@ -61,7 +61,6 @@ export const CreateStation: FC<CreateStationProps> = (props) => {
     onChange(info) {
       const { status } = info.file;
       if (status !== "uploading") {
-        console.log(info.file, info.fileList);
       }
       if (status === "done") {
         message.success(`${info.file.name} file uploaded successfully.`);
@@ -70,9 +69,7 @@ export const CreateStation: FC<CreateStationProps> = (props) => {
         message.error(`${info.file.name} file upload failed.`);
       }
     },
-    onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
-    },
+    onDrop(e) {},
   };
   const [form] = useForm();
 
@@ -245,9 +242,6 @@ export const CreateStation: FC<CreateStationProps> = (props) => {
               placeholder="Email контактної особи"
             />
           </Form.Item>
-          <Form.Item>
-            <Button htmlType="submit">Створити Станцію</Button>
-          </Form.Item>
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             <FilesCollapse
               files={plantModules}
@@ -270,6 +264,16 @@ export const CreateStation: FC<CreateStationProps> = (props) => {
               title="Інші"
             />
           </div>
+          <Form.Item>
+            <Button
+              type="primary"
+              size="large"
+              style={{ width: "100%", marginTop: 20 }}
+              htmlType="submit"
+            >
+              Створити Станцію
+            </Button>
+          </Form.Item>
         </Form>
       </div>
     </>

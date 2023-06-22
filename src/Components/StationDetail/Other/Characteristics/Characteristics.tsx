@@ -1,6 +1,6 @@
-import { FC, useContext, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { CharacteristicsProps } from ".";
-import { Col, Row, Space, Typography } from "antd";
+import { Col, Divider, Row, Space, Typography } from "antd";
 import styles from "./Characteristics.module.css";
 import { Badge } from "../../../Badge";
 import { LinkOutlined, PictureFilled, LayoutFilled } from "@ant-design/icons";
@@ -12,6 +12,38 @@ export const Characteristics: FC<CharacteristicsProps> = (props) => {
 
   const plant = useContext(PlantContext);
 
+  const [equipments, setEquipments] = useState<
+    Record<string, { name: string; docs: any[] }>
+  >({});
+
+  useEffect(() => {
+    const data: Record<string, { name: string; docs: any[] }> = {
+      PLANTMODULES: {
+        name: "Сонячні модулі",
+        docs: [],
+      },
+      KTP: {
+        name: "Трансформаторні підстанції",
+        docs: [],
+      },
+      INVERTERS: {
+        name: "Інвентори",
+        docs: [],
+      },
+      OTHER: {
+        name: "Інші",
+        docs: [],
+      },
+    };
+    console.log(plant);
+
+    plant?.documents.forEach((doc) => {
+      data[doc.documentType].docs.push(doc);
+    });
+
+    setEquipments(data);
+  }, []);
+
   function showGallery() {
     setOpenModalGallery(true);
   }
@@ -19,7 +51,7 @@ export const Characteristics: FC<CharacteristicsProps> = (props) => {
   function hideGallery() {
     setOpenModalGallery(false);
   }
-
+  console.log(equipments);
   return (
     <div>
       <Typography style={{ fontSize: "1.2rem", fontWeight: 600 }}>
@@ -88,96 +120,42 @@ export const Characteristics: FC<CharacteristicsProps> = (props) => {
         Обладнання
       </Typography>
 
-      <Typography className={styles.smallText}>Сонячні модулі</Typography>
-      <Row gutter={[5, 5]}>
-        <Col xs={8}>
-          <div className={styles.filled}>
-            <LinkOutlined className={styles.link} />
-            <p className={styles.equipment}>JA Solar</p>
-            <p className={styles.equipment}>JAP72509-335/SC</p>
-          </div>
-        </Col>
-        <Col xs={4}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>12558 шт.</p>
-          </div>
-        </Col>
-        <Col xs={8}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>JA Solar</p>
-            <p className={styles.equipment}>JAP72509-335/SC</p>
-          </div>
-        </Col>
-        <Col xs={4}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>12558 шт.</p>
-          </div>
-        </Col>
-      </Row>
-
-      <Typography className={styles.smallText}>Інвентори</Typography>
-      <Row gutter={[5, 5]}>
-        <Col xs={8}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>SMA</p>
-            <p className={styles.equipment}>SHP Peak 150-20</p>
-          </div>
-        </Col>
-        <Col xs={4}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>66 шт.</p>
-          </div>
-        </Col>
-        <Col xs={8}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}></p>
-            <p className={styles.equipment}></p>
-          </div>
-        </Col>
-        <Col xs={4}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}></p>
-          </div>
-        </Col>
-      </Row>
-
-      <Typography className={styles.smallText}>
-        Трансформаторні підстанції
-      </Typography>
-      <Row gutter={[5, 5]}>
-        <Col xs={8}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>JA Solar</p>
-            <p className={styles.equipment}>JAP72509-335/SC</p>
-          </div>
-        </Col>
-        <Col xs={4}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>12558 шт.</p>
-          </div>
-        </Col>
-        <Col xs={8}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>JA Solar</p>
-            <p className={styles.equipment}>JAP72509-335/SC</p>
-          </div>
-        </Col>
-        <Col xs={4}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>12558 шт.</p>
-          </div>
-        </Col>
-      </Row>
-
-      <Typography className={styles.smallText}>Металоконструкції</Typography>
-      <Row gutter={[5, 5]}>
-        <Col xs={12}>
-          <div className={styles.filled}>
-            <p className={styles.equipment}>4х рядні.</p>
-            <p className={styles.equipment}>Горизонтально орієнтовані</p>
-          </div>
-        </Col>
-      </Row>
+      {Object.values(equipments).map((document) => {
+        return (
+          <React.Fragment key={document.name}>
+            <Typography>{document.name}</Typography>
+            <Row gutter={[5, 5]}>
+              {document.docs.length ? (
+                <>
+                  {document.docs.map((doc) => {
+                    return (
+                      <Col xs={12} key={doc.id}>
+                        <Row gutter={[5, 5]}>
+                          <Col xs={16}>
+                            <div className={styles.filled}>
+                              <p className={styles.equipment}>{doc.name}</p>
+                            </div>
+                          </Col>
+                          <Col xs={8}>
+                            <div className={styles.filled}>
+                              <p className={styles.equipment}>-</p>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                    );
+                  })}
+                </>
+              ) : (
+                <Typography.Paragraph className={styles.smallText}>
+                  Відсутнье
+                </Typography.Paragraph>
+              )}
+            </Row>
+            <Divider style={{ margin: "5px 0 10px" }} />
+          </React.Fragment>
+        );
+      })}
       <GalleryModal open={openModalGallery} hideModal={hideGallery} />
     </div>
   );

@@ -81,6 +81,14 @@ export interface PlantResponseDto {
   readonly plantProductivityDeclineRate: any; //PlantProductivityDeclineRate | null;
   readonly plantStatusHistory?: any[]; //PlantStatusHistoryResponseDto[];
   readonly user?: any; //UserResponseDto;
+  readonly documents: {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    documentType: string;
+    url: string;
+    name: string;
+  }[];
 }
 
 export type PlantName = Pick<Plant, "id" | "name">;

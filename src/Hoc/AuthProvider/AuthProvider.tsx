@@ -49,13 +49,17 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (auth.isAuth && jwtToken) {
+      whoAmI();
+    }
+  }, [auth.isAuth]);
+
   async function signIn(authData: { email: string; password: string }) {
     const res = await request(`${baseUrl}${sign}`, HTTPMethod.POST, authData);
     if (res.token) {
       setJWTToken(res.token);
       setAuth((prev) => ({ ...prev, isAuth: true }));
-
-      whoAmI();
     } else {
       message.error(res.message);
     }

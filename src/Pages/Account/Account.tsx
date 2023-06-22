@@ -1,18 +1,19 @@
-import React, { FC, useEffect, useState } from "react";
-import { AccountProps } from ".";
-import { Card, Col, Row, Tabs, Typography, theme } from "antd";
-import { MainAccount } from "./MainAccount";
-import { PrivacyAccount } from "./PrivacyAccount";
-import { useHref, useLocation, useNavigate } from "react-router";
-import { Helmet } from "react-helmet";
-import { BASE_APP_NAME } from "../../consts";
-import { LockFilled, IdcardFilled } from "@ant-design/icons";
+import React, {FC, useEffect, useState} from "react";
+import {AccountProps} from ".";
+import {Card, Tabs, theme, Typography} from "antd";
+import {MainAccount} from "./MainAccount";
+import {PrivacyAccount} from "./PrivacyAccount";
+import {useLocation, useNavigate} from "react-router";
+import {Helmet} from "react-helmet";
+import {BASE_APP_NAME} from "../../consts";
+import {IdcardFilled, LockFilled} from "@ant-design/icons";
+import {mediaQueryType, useMediaQuery} from "../../hooks/useMediaQuery";
 
 export const Account: FC<AccountProps> = (props) => {
   const {
     token: { colorPrimary },
   } = theme.useToken();
-
+const isTablet = useMediaQuery(mediaQueryType.LESS, 1000)
   const urlData = useLocation();
   const navigate = useNavigate();
 
@@ -37,8 +38,8 @@ export const Account: FC<AccountProps> = (props) => {
         <Tabs
           onChange={tabHandler}
           activeKey={activeKey}
-          tabPosition={"left"}
-          style={{ height: 220 }}
+          tabPosition={isTablet? "top": "left"}
+          style={{ minHeight: 220 }}
           items={[
             {
               label: (

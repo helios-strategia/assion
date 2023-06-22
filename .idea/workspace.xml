@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0ff00e47-2de9-4836-9e42-72d04bbdbf2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/StationDetail/Main/Weather/Weather.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/StationDetail/Main/Weather/Weather.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/StationDetail/Other/Characteristics/Characteristics.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/StationDetail/Other/Characteristics/Characteristics.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/StationDetail/Other/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/StationDetail/Other/Map/Map.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Hoc/AuthProvider/AuthProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hoc/AuthProvider/AuthProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LayoutApp/HeaderApp/HeaderApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/LayoutApp/HeaderApp/HeaderApp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LayoutApp/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/LayoutApp/Layout/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LayoutApp/SideBar/SideBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/LayoutApp/SideBar/SideBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Auth/Auth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Auth/Auth.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/Account/Account.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Account/Account.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/Account/MainAccount/MainAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Account/MainAccount/MainAccount.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Pages/CreateStation/CreateStation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/CreateStation/CreateStation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Router/AuthorizedRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Router/AuthorizedRouter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Router/UnAuthorizedRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Router/UnAuthorizedRouter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/CurrentStation/CurrentStation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/CurrentStation/CurrentStation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/Users/Users.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Users/Users.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hooks/useHttp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useHttp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useWeather.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useWeather.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/plant.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/plant.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,14 +36,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/ssd/Documents/Projects/assion&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/ssd/Documents/Projects/Helios/assion",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors",
+    "ts.external.directory.path": "/Users/ssd/Documents/Projects/Helios/assion/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -46,7 +60,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1683273657855</updated>
+      <workItem from="1687422626837" duration="1334000" />
+      <workItem from="1687424939484" duration="2116000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

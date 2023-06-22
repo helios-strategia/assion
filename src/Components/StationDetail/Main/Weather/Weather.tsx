@@ -15,7 +15,6 @@ export const Weather: FC<WeatherProps> = (props) => {
     loading: weatherLoading,
     fetchWeather,
   } = useWeather();
-  console.log(weather, weatherLoading);
   const plant = useContext(PlantContext);
 
   useEffect(() => {
