@@ -1,0 +1,13 @@
+.smallText {
+    font-size: 0.7rem;
+    color: #666;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.bigText {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: auto;
+    margin-bottom: auto;
+}

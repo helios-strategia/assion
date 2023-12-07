@@ -1,0 +1,83 @@
+.indicatorsHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.indicatorsDate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.indicatorsDataWrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.indicatorsData {
+    padding: 15px 30px;
+    background-color: rgb(252, 188, 78);
+    border-radius: 30px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.iconBtn {
+    cursor: pointer;
+    transition: .3s;
+}
+
+.iconBtn:hover {
+    transform: scale(1.1);
+}
+
+.toggler {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.smallText {
+    font-size: 0.7rem;
+    color: #666;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.bigText {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.chartWrapper {
+    margin: 15px 0;
+    padding: 40px;
+    border: 1px solid rgb(252, 188, 78);
+    border-radius: 10px;
+}
+
+.infoWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 0px;
+}
+
+.infoItem {
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
+
+.infoIcon {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border: 1px solid #666;
+}

@@ -1,0 +1,27 @@
+.uploadWrapper {
+    width: 100%;
+    margin: 0;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ccc;
+    background-color: #dcdcdc7c;
+    position: relative;
+    border-radius: 10px;
+    justify-content: center;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.uploadWrapper:hover {
+    opacity: .9;
+    border: 1px dashed rgb(252, 188, 78);
+}
+
+.upload {
+    width: 1px;
+    height: 1px;
+    visibility: hidden;
+}

@@ -1,0 +1,17 @@
+.smallText {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.bigText {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.card:hover {
+    border-color: rgb(252, 188, 78);
+}

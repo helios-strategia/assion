@@ -1,0 +1,9 @@
+.wrapper {
+    cursor: pointer;
+    transition: .3s all;
+}
+
+.wrapper:hover {
+    transform: scale(1.05);
+    background-color: rgba(252, 188, 78, 0.15);
+}

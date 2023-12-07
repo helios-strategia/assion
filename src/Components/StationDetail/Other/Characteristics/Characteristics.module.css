@@ -1,0 +1,48 @@
+.mapWrapper {
+    margin-top: 30px;
+}
+
+.smallText {
+    font-size: 0.7rem;
+    color: #666;
+    line-height: 1rem;
+    margin-bottom: auto;
+}
+
+.bigText {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.badgesWrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+}
+
+.filled {
+    background-color: rgb(255, 227, 180);
+    padding: 8px 12px;
+    border-radius: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.link {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.equipment {
+    margin-bottom: auto;
+    margin-top: auto;
+}
